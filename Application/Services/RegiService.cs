@@ -60,7 +60,7 @@ namespace Application.Services
                 Name = regions.Name,
                 Id = regions.Id,
                 Color = regions.Color,
-                Description = regions.Description, 
+                Description = regions.Description,  
             }).ToList();
         }
     }
