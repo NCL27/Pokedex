@@ -1,0 +1,21 @@
+﻿@using Application.ViewModels.Region
+@model SaveRegiViewModel
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="col-6" offset-3">
+    <div class="card">
+        <div class="card-header bg-white text-dark">
+            <h4>¿Seguro que desea eliminar la region de @Model.Name?</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-controller="Region" asp-action="DeletePost">
+                <input type="hidden" asp-for="Id" />
+
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <a asp-controller="Region" asp-action="Index" class="btn btn-warning">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

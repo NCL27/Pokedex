@@ -1,0 +1,41 @@
+﻿@using Application.ViewModels.Region
+@model SaveRegiViewModel
+@{
+    bool editMode = Model.Id == 0 ? false : true;
+    ViewData["Title"] = "Save Region";
+}
+
+<div class="container-fluid">
+    <div class="col-6 offset-3">
+        <div class="card">
+            <div class="card-header bg-dark text-light">
+                <h4>@(editMode ? $"Editando la region: {Model.Name}" : "Creando un nuevo region")</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-controller="Region" asp-action="@(editMode ? "Edit":"Create")">
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label">Name: </label>
+                        <input type="text" asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label">Description: </label>
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Color" class="form-label">Color: </label>
+                        <textarea asp-for="Color" class="form-control"></textarea>
+                        <span asp-validation-for="Color" class="text-danger"></span>
+                    </div>
+              
+
+                    <input type="hidden" asp-for="Id" />
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a asp-controller="Region" asp-action="Index" class="btn btn-warning">go back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
