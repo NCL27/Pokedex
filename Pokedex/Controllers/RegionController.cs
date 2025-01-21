@@ -25,7 +25,7 @@ namespace Pokedex.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(SaveRegiViewModel vm)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View("SaveRegion", vm);
             }
