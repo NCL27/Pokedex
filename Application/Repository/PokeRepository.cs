@@ -37,19 +37,9 @@ namespace Application.Repository
         {
             return await _dbContext.Set<Pokemons>().ToListAsync();
         }
-        public async Task<Pokemons> GetByIdAsyns(int id)
+        public async Task<Pokemons> GetByIdAsyns(int Id)
         {
-            return await _dbContext.Set<Pokemons>().FindAsync(id);
-        }
-
-        internal async Task<IEnumerable<object>> GetByIdAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal async Task GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
+            return await _dbContext.Set<Pokemons>().FindAsync(Id);
         }
     }
 }

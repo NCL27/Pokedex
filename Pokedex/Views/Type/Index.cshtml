@@ -1,24 +1,24 @@
-﻿@using Application.ViewModels.Region
-@model List<RegiViewModel>
+﻿@using Application.ViewModels.Type
+@model List<TypeViewModel>
 @{
-    ViewData["Title"] = "Regions";
+    ViewData["Title"] = "Type";
 }
 
 <div class="container-fluid">
 
     <div class="row mb-3">
         <div class="col-3 offset-9">
-            <a asp-controller="Region" asp-action="Create" class="btn btn-outline-success">Crear nueva region</a>
+            <a asp-controller="Type" asp-action="Create" class="btn btn-outline-success">Create new type</a>
         </div>
     </div>
     <div class="row">
         @if (Model == null || Model.Count == 0)
         {
-            <h2>There aren't regions</h2>
+            <h2>There aren't types</h2>
         }
         else
         {
-            @foreach (RegiViewModel item in Model)
+            @foreach (TypeViewModel item in Model)
             {
                 <div class="col-4">
                     <div class="card shadow-sm">
@@ -28,10 +28,9 @@
                             <p class="card-text">@item.Description</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a asp-controller="Region" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-info">Edit</a>
-                                    <a asp-controller="Region" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
+                                    <a asp-controller="Type" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-info">Edit</a>
+                                    <a asp-controller="type" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
                                 </div>
-                                <small class="text-body-secondary">@item.Color</small>
                             </div>
                         </div>
                     </div>
@@ -40,4 +39,3 @@
         }
     </div>
 </div>
-

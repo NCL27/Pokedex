@@ -37,19 +37,10 @@ namespace Application.Repository
         {
             return await _dbContext.Set<Regions>().ToListAsync();
         }
-        public async Task<Regions> GetByIdAsyns(int id)
+        public async Task<Regions> GetByIdAsyns(int Id)
         {
-            return await _dbContext.Set<Regions>().FindAsync(id);
-        }
-
-        internal async Task<IEnumerable<object>> GetByIdAsync()
-        {
-            throw new NotImplementedException();
-        }
-         
-        internal async Task GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
+            return await _dbContext.Set<Regions>().FindAsync(Id);
         }
     }
 }
+ 

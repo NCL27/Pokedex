@@ -1,0 +1,34 @@
+﻿@using Application.ViewModels.Type
+@model SaveTypeViewModel
+@{
+    bool editMode = Model.Id == 0 ? false : true;
+    ViewData["Title"] = "Save Type";
+}
+
+<div class="container-fluid">
+    <div class="col-6 offset-3">
+        <div class="card">
+            <div class="card-header bg-dark text-light">
+                <h4>@(editMode ? $"Editing the type: {Model.Name}" : "Creating new region")</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-controller="Type" asp-action="@(editMode ? "Edit":"Create")">
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label">Name: </label>
+                        <input type="text" asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label">Description: </label>
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <input type="hidden" asp-for="Id" />
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a asp-controller="Type" asp-action="Index" class="btn btn-warning">go back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

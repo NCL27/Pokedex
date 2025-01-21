@@ -48,7 +48,7 @@ namespace Pokedex.Controllers
         }
         public async Task<IActionResult> Delete(int Id)
         {
-            return View(await _regiService.GetByIdSaveViewModel(Id));
+            return View("Delete", await _regiService.GetByIdSaveViewModel(Id));
         }
         [HttpPost]
         public async Task<IActionResult> DeletePost(int Id)

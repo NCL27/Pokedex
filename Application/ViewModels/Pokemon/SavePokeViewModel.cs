@@ -11,13 +11,13 @@ namespace Application.ViewModels.Pokemon
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Debe colocarle un nombre al pokemon")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Debe colocarle una caracteristica al pokemon")]
-        public string ImgUrl { get; set; }
+        public string ImgUrl { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Debe colocarle una imagen al pokemon")]
-        public string Caracteristica { get; set; }
+        public string Caracteristica { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Debe colocarle un tipo al pokemon")]
         public int TypeId { get; set; }

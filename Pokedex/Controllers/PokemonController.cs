@@ -25,7 +25,7 @@ namespace Pokedex.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(SavePokeViewModel vm)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View("SavePokemon", vm);
             }
@@ -39,7 +39,7 @@ namespace Pokedex.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(SavePokeViewModel vm)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View("SavePokemon", vm);
             }
@@ -48,7 +48,7 @@ namespace Pokedex.Controllers
         }
         public async Task<IActionResult> Delete(int Id)
         {
-            return View(await _pokeService.GetByIdSaveViewModel(Id));
+            return View("DeletePokemon", await _pokeService.GetByIdSaveViewModel(Id));
         }
         [HttpPost]
         public async Task<IActionResult> DeletePost(int Id)

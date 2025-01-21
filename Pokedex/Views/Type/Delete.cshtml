@@ -1,0 +1,22 @@
+﻿@using Application.ViewModels.Type
+@model SaveTypeViewModel
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="col-6" offset-3">
+    <div class="card">
+        <div class="card-header bg-white text-dark">
+            <h4>¿Seguro que desea eliminar el tipo de @Model.Name?</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-controller="Type" asp-action="DeletePost">
+                <input type="hidden" asp-for="Id" />
+
+                <button type="submit" class="btn btn-danger">Delete</button>
+                <a asp-controller="Type" asp-action="Index" class="btn btn-warning">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
