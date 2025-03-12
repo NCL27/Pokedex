@@ -1,9 +1,15 @@
-using Database;
 using Microsoft.EntityFrameworkCore;
+using Pokedex.Infrastructure.Persistence;
+using Pokedex.Infrastructure.Persistence.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+//interfaces
+builder.Services.AddPersistenceInfrastructure(builder.Configuration);
+builder.Services.AddApplicationLayer(builder.Configuration);
+
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

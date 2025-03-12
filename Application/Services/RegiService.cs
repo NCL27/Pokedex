@@ -1,9 +1,7 @@
-﻿using Application.Repository;
-using Application.ViewModels;
-using Application.ViewModels.Pokemon;
-using Application.ViewModels.Region;
-using Database;
-using Database.Models;
+﻿using Pokedex.Core.Application.Interfaces.Repositories;
+using Pokedex.Core.Application.Interfaces.Services;
+using Pokedex.Core.Application.ViewModels.Region;
+using Pokedex.Core.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class RegiService
+    public class RegiService : IRegiService
     {
-        private readonly RegiRepository _regiRepository;
-        public RegiService(ApplicationContext dbContext)
+        private readonly IRegiRepository _regiRepository;
+        public RegiService(IRegiRepository regiRepository)
         {
-            _regiRepository = new(dbContext);
+            _regiRepository = regiRepository;
         }
         public async Task Add(SaveRegiViewModel vm)
         {
@@ -54,13 +52,14 @@ namespace Application.Services
         }
         public async Task<List<RegiViewModel>> GetAllViewModels()
         {
-            var regiList = await _regiRepository.GetAllAsync();
+            var regiList = await _regiRepository.GetAllWithIncludeAsync(new List<String> { "Pokemons"});
             return regiList.Select(regions => new RegiViewModel
             {
                 Name = regions.Name,
                 Id = regions.Id,
                 Color = regions.Color,
                 Description = regions.Description,
+                PokemonsQuantity = regions.Pokemons.Count()
             }).ToList();
         }
     }

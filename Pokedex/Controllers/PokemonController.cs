@@ -1,32 +1,41 @@
-﻿using Application.Services;
-using Application.ViewModels.Pokemon;
-using Database;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Pokedex.Core.Application.Interfaces.Services;
+using Pokedex.Core.Application.ViewModels.Pokemon;
+
 
 namespace Pokedex.Controllers
 {
     public class PokemonController : Controller
     {
-        private readonly PokeService _pokeService;
+        private readonly IPokeService _pokeService;
+        private readonly IRegiService _regiService;
+        private readonly ITypeService _typeService;
 
-        public PokemonController(ApplicationContext dbContext)
+        public PokemonController(IPokeService pokeService, IRegiService regiService, ITypeService typeService)
         {
-            _pokeService = new(dbContext);
+            _pokeService = pokeService;
+            _regiService = regiService;
+            _typeService = typeService;
         }
         public async Task<IActionResult> Index()
         {
             return View(await _pokeService.GetAllViewModels());
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View("SavePokemon", new SavePokeViewModel());
+            SavePokeViewModel vm = new();
+            vm.Regions = await _regiService.GetAllViewModels();
+            vm.Types = await _typeService.GetAllViewModels();
+            return View("SavePokemon", vm);
         }
         [HttpPost]
         public async Task<IActionResult> Create(SavePokeViewModel vm)
         {
             if (!ModelState.IsValid)
             {
+                vm.Regions = await _regiService.GetAllViewModels();
+                vm.Types = await _typeService.GetAllViewModels();
                 return View("SavePokemon", vm);
             }
             await _pokeService.Add(vm);
@@ -34,13 +43,18 @@ namespace Pokedex.Controllers
         }
         public async Task<IActionResult> Edit(int Id)
         {
-            return View("SavePokemon", await _pokeService.GetByIdSaveViewModel(Id));
+            SavePokeViewModel vm = await _pokeService.GetByIdSaveViewModel(Id);
+            vm.Regions = await _regiService.GetAllViewModels();
+            vm.Types = await _typeService.GetAllViewModels();
+            return View("SavePokemon", vm);
         }
         [HttpPost]
         public async Task<IActionResult> Edit(SavePokeViewModel vm)
         {
             if (!ModelState.IsValid)
             {
+                vm.Regions = await _regiService.GetAllViewModels();
+                vm.Types = await _typeService.GetAllViewModels();
                 return View("SavePokemon", vm);
             }
             await _pokeService.Update(vm);

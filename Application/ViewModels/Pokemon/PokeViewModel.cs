@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.ViewModels.Pokemon
+namespace Pokedex.Core.Application.ViewModels.Pokemon
 {
     public class PokeViewModel
     {
@@ -12,5 +12,10 @@ namespace Application.ViewModels.Pokemon
         public string Name { get; set; }
         public string ImgUrl { get; set; }
         public string Caracteristica { get; set; }
+
+
+        public string TypeName { get; set; }
+        public string RegionName { get; set; }
+        public int RegionId{ get; set; }
     }
 }

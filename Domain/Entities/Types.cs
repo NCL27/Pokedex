@@ -1,16 +1,15 @@
-﻿using System;
+﻿using Pokedex.Core.Domain.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Database.Models
+namespace Pokedex.Core.Domain.Entities
 {
-    public class Regions
+    public class Types : AuditableBaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
-        public string Color { get; set; }
         public string Description { get; set; }
 
         //navegation property

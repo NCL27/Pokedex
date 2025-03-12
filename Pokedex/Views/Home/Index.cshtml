@@ -1,36 +1,101 @@
-﻿@using Application.ViewModels.Pokemon
+﻿@using Pokedex.Core.Application.ViewModels.Pokemon;
+@using Pokedex.Core.Application.ViewModels.Region
 @model List<PokeViewModel>
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="container-fluid">
-    <div class="row">
-        @if (Model == null || Model.Count == 0)
-        {
-            <h2>There aren't pokemons</h2>
-        }
-        else
-        {
-            @foreach (PokeViewModel item in Model)
-            {
-                <div class="col-4">
-                    <div class="card shadow-sm">
-                        <img class="bd-placeholder-img card-img-top img-pokemon-size" src="@item.ImgUrl" />
 
-                        <div class="card-body">
-                            <h4>@item.Name</h4>
-                            <p class="card-text">@item.Caracteristica</p>
-                            <div class="d-flex justify-content-between align-items-center">  
-                                <small class="text-body-secondary">aqui va el tipo</small>
+    <div class="row">
+        <div class="col-3">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-light">
+                    <h4>Filtros</h4>
+                </div>
+
+                <div class="card-body">
+                    <h4 class="card-title">Regions</h4>
+                    <form method="post" asp-controller="Home" asp-action="Index">
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" value="null" type="radio" name="RegionId" id="region-all"/>
+                                <label class="form-check-label" for="region-all">Todas</label>
                             </div>
                         </div>
-                        <div>
+                        @foreach (RegiViewModel regions in ViewBag.Regions)
+                        {
 
-                        </div>
-                    </div> 
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" value="@regions.Id" type="radio" name="RegionId" id="region-@regions.Id" />
+                                    <label class="form-check-label" for="region-@regions.Id">@regions.Name</label>
+                                </div>
+                            </div>
+                        }
+
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+
+                    </form>
+
+                   
                 </div>
-            }
-        }
+            </div>
+        </div>
+
+        <div class="col-9">
+            <div class="row">
+                @if (Model == null || Model.Count == 0)
+                {
+                    <h2>There aren't pokemons</h2>
+                }
+                else
+                {
+                    @foreach (PokeViewModel item in Model)
+                    {
+                         
+                            var typeColors = new Dictionary<string, string>
+                            {
+                            { "Fuego", "#FF5733" },   // Naranja-Rojo
+                            { "Agua", "#3498DB" },    // Azul
+                            { "Planta", "#27AE60" },  // Verde
+                            { "Eléctrico", "#F1C40F" }, // Amarillo
+                            { "Hielo", "#5DADE2" },   // Azul Claro
+                            { "Psíquico", "#FFCBDB" }, // Morado
+                            { "Normal", "566573" }, //Gris
+                            { "Lucha", "#e67e22" }, //Naranja
+                            { "Veneno", "#7d3c98" }, //Morado
+                            { "Tierra", "#784212" }, //Marron
+                            { "Volador", "#00FFFF" }, //Cian
+                            { "Bicho", "#32CD32" }, //Lima
+                            { "Roca", "#EDE8DO" }, //Beige
+                            { "Fantasma", "#4a235a" }, //Violata oscuro
+                            { "Dragón", "#00446A" }, //Azul Marino
+                            { "Siniestro", "#000000" }, //Negro
+                            { "Acero", "#999B9B" }, //Plateado
+                            { "Hada", "FF00FF" }, //Fucsia
+                            };
+
+                            string color = typeColors.ContainsKey(item.TypeName) ? typeColors[item.TypeName] : "#000000"; // Gris por defecto
+                        
+                        <div class="col-4">
+                            <div class="card shadow-sm">
+                                <img class="bd-placeholder-img card-img-top img-pokemon-size" src="@item.ImgUrl" />
+
+                                <div class="card-body">
+                                    <h4>@item.Name</h4>
+                                    <p class="card-text">@item.Caracteristica</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span style="color:@color;" class="fw-bold">@item.TypeName</span>
+                                        <h5>@item.RegionName</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
     </div>
 </div>

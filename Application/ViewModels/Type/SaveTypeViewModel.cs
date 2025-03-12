@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.ViewModels.Type
+namespace Pokedex.Core.Application.ViewModels.Type
 {
     public class SaveTypeViewModel
     {

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Database\Database.csproj" />
+    <Folder Include="Settings\" />
   </ItemGroup>
 
 </Project>

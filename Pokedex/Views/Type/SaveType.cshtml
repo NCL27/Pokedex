@@ -1,4 +1,4 @@
-﻿@using Application.ViewModels.Type
+﻿@using Pokedex.Core.Application.ViewModels.Type;
 @model SaveTypeViewModel
 @{
     bool editMode = Model.Id == 0 ? false : true;
@@ -12,6 +12,7 @@
                 <h4>@(editMode ? $"Editing the type: {Model.Name}" : "Creating new region")</h4>
             </div>
             <div class="card-body">
+
                 <form method="post" asp-controller="Type" asp-action="@(editMode ? "Edit":"Create")">
                     <div class="mb-3">
                         <label asp-for="Name" class="form-label">Name: </label>

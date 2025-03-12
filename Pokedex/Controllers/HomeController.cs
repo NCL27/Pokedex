@@ -1,22 +1,26 @@
-using Application.Services;
-using Database;
 using Microsoft.AspNetCore.Mvc;
-using Pokedex.Models;
-using System.Diagnostics;
+using Pokedex.Core.Application.Interfaces.Services;
+using Pokedex.Core.Application.ViewModels.Pokemon;
+
 
 namespace Pokedex.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly PokeService _pokeService;
-
-        public HomeController(ApplicationContext dbContext)
+        private readonly IPokeService _pokeService;
+        private readonly IRegiService _regiService;
+        private readonly ITypeService _typeService;
+        public HomeController(IPokeService pokeService, IRegiService regiService, ITypeService typeService)
         {
-            _pokeService = new(dbContext);
+            _pokeService = pokeService;
+            _regiService = regiService;
+            _typeService = typeService;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(FilterPokeViewModel vm)
         {
-            return View(await _pokeService.GetAllViewModels());
+            ViewBag.Regions = await _regiService.GetAllViewModels();
+            ViewBag.Types = await _typeService.GetAllViewModels();
+            return View(await _pokeService.GetAllViewModelWithFilters(vm));
         }
     }
 }

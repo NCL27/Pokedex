@@ -1,22 +1,16 @@
-﻿using Application.Repository;
-using Application.ViewModels;
-using Application.ViewModels.Pokemon;
-using Database;
-using Database.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Pokedex.Core.Application.Interfaces.Repositories;
+using Pokedex.Core.Application.Interfaces.Services;
+using Pokedex.Core.Application.ViewModels.Pokemon;
+using Pokedex.Core.Domain.Entities;
 
 namespace Application.Services
 {
-    public class PokeService
+    public class PokeService : IPokeService
     {
-        private readonly PokeRepository _pokeRepository;
-        public PokeService(ApplicationContext dbContext)
+        private readonly IPokeRepository _pokeRepository;
+        public PokeService(IPokeRepository pokeRepository)
         {
-            _pokeRepository = new(dbContext);
+            _pokeRepository = pokeRepository;
         }
         public async Task Add(SavePokeViewModel vm)
         {
@@ -60,14 +54,41 @@ namespace Application.Services
         }
         public async Task<List<PokeViewModel>> GetAllViewModels()
         {
-            var pokeList = await _pokeRepository.GetAllAsync();
+            var pokeList = await _pokeRepository.GetAllWithIncludeAsync(new List<string> { "Types", "Regions"});
             return pokeList.Select(pokemons => new PokeViewModel
             {
                 Name = pokemons.Name,
                 Id = pokemons.Id,
                 ImgUrl = pokemons.ImgUrl,
                 Caracteristica = pokemons.Caracteristica,
+                TypeName = pokemons.Types.Name,
+                RegionName = pokemons.Regions.Name,
+                RegionId = pokemons.Regions.Id,
             }).ToList();
+        }
+        public async Task<List<PokeViewModel>> GetAllViewModelWithFilters(FilterPokeViewModel filters)
+        {
+            var pokeList = await _pokeRepository.GetAllWithIncludeAsync(new List<string> { "Types", "Regions" });
+
+            var listViewModels = pokeList.Select(pokemons => new PokeViewModel
+            {
+                Name = pokemons.Name,
+                Id = pokemons.Id,
+                ImgUrl = pokemons.ImgUrl,
+                Caracteristica = pokemons.Caracteristica,
+                TypeName = pokemons.Types.Name,
+                RegionName = pokemons.Regions.Name,
+                RegionId = pokemons.Regions.Id,
+            }).ToList();
+
+            if (filters.RegionId != null)
+            {
+                listViewModels = listViewModels.Where(pokemons => pokemons.RegionId == filters.RegionId.Value).ToList();
+            }
+
+            return listViewModels;
+
+
         }
 
     }

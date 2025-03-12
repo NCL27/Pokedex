@@ -1,4 +1,4 @@
-﻿@using Application.ViewModels.Pokemon
+﻿@using Pokedex.Core.Application.ViewModels.Pokemon;
 @model List<PokeViewModel>
 @{
     ViewData["Title"] = "Pokemons";
@@ -23,19 +23,40 @@
                 <div class="col-4">
                     <div class="card shadow-sm">
                         <img class="bd-placeholder-img card-img-top img-pokemon-size" src="@item.ImgUrl" />
+                        @{
+                            var typeColors = new Dictionary<string, string>
+                            {
+                            { "Fuego", "#FF5733" },   // Naranja-Rojo
+                            { "Agua", "#3498DB" },    // Azul
+                            { "Planta", "#27AE60" },  // Verde
+                            { "Eléctrico", "#F1C40F" }, // Amarillo
+                            { "Hielo", "#5DADE2" },   // Azul Claro
+                            { "Psíquico", "#FFCBDB" }, // Morado
+                            { "Normal", "566573" }, //Gris
+                            { "Lucha", "#e67e22" }, //Naranja
+                            { "Veneno", "#7d3c98" }, //Morado
+                            { "Tierra", "#784212" }, //Marron
+                            { "Volador", "#00FFFF" }, //Cian
+                            { "Bicho", "#32CD32" }, //Lima
+                            { "Roca", "#EDE8DO" }, //Beige
+                            { "Fantasma", "#4a235a" }, //Violata oscuro
+                            { "Dragón", "#00446A" }, //Azul Marino
+                            { "Siniestro", "#000000" }, //Negro
+                            { "Acero", "#999B9B" }, //Plateado
+                            { "Hada", "FF00FF" }, //Fucsia
+                            };
 
+                            string color = typeColors.ContainsKey(item.TypeName) ? typeColors[item.TypeName] : "#000000"; // Gris por defecto
+                        }
                         <div class="card-body">
-                            <h4>@item.Name</h4>
+                            <h4 class="card-title">@item.Name -  <span style="color:@color;">@item.TypeName</span></h4>
                             <p class="card-text">@item.Caracteristica</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a asp-controller="Pokemon" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-info">Edit</a>
                                     <a asp-controller="Pokemon" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
                                 </div>
-                                <small class="text-body-secondary">aqui va el tipo</small>
-                            </div>
-                            <div>
-
+                                <h5>@item.RegionName</h5>
                             </div>
                         </div>
                     </div>

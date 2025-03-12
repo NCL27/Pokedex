@@ -1,18 +1,17 @@
-﻿using Application.Services;
-using Application.ViewModels.Type;
-using Database;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Pokedex.Core.Application.Interfaces.Services;
+using Pokedex.Core.Application.ViewModels.Type;
 
 namespace Pokedex.Controllers
 {
     public class TypeController : Controller
     {
 
-        private readonly TypeService _typeService;
+        private readonly ITypeService _typeService;
 
-        public TypeController(ApplicationContext dbContext)
+        public TypeController(ITypeService typeService)
         {
-            _typeService = new(dbContext);
+            _typeService = typeService;
         }
         public async Task<IActionResult> Index()
         {

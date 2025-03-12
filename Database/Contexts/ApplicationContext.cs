@@ -1,12 +1,14 @@
-﻿using Database.Models;
+﻿
 using Microsoft.EntityFrameworkCore;
+using Pokedex.Core.Domain.Common;
+using Pokedex.Core.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Database
+namespace Pokedex.Infrastructure.Persistence.Contexts
 {
     public class ApplicationContext : DbContext
     {
@@ -16,6 +18,29 @@ namespace Database
         public DbSet<Regions> Regions { get; set; }
         public DbSet<Types> Types { get; set; }
 
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            foreach (var entry in ChangeTracker.Entries<AuditableBaseEntity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.Created = DateTime.Now;
+                        entry.Entity.CreatedBy = "DefaultAppUser";
+                        entry.Entity.LastModified = DateTime.Now;
+                        entry.Entity.LastModifiedBy = "DefaultAppUser";
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.Created = DateTime.Now;
+                        entry.Entity.CreatedBy = "DefaultAppUser";
+                        entry.Entity.LastModified = DateTime.Now;
+                        entry.Entity.LastModifiedBy = "DefaultAppUser";
+                        break;
+                }
+            }
+            
+            return base.SaveChangesAsync(cancellationToken);
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Fluent API

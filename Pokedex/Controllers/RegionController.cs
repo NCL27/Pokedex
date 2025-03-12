@@ -1,18 +1,17 @@
-﻿using Application.Services;
-using Application.ViewModels.Region;
-using Database;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Pokedex.Core.Application.Interfaces.Services;
+using Pokedex.Core.Application.ViewModels.Region;
 
 namespace Pokedex.Controllers
 {
     public class RegionController : Controller
     {
 
-        private readonly RegiService _regiService;
+        private readonly IRegiService _regiService;
 
-        public RegionController(ApplicationContext dbContext)
+        public RegionController(IRegiService regiService)
         {
-            _regiService = new(dbContext);
+            _regiService = regiService;
         }
         public async Task<IActionResult> Index()
         {

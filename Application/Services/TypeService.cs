@@ -1,22 +1,17 @@
-﻿using Application.Repository;
-using Application.ViewModels.Type;
-using Database;
-using Database.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Pokedex.Core.Application.Interfaces.Repositories;
+using Pokedex.Core.Application.Interfaces.Services;
+using Pokedex.Core.Application.ViewModels.Type;
+using Pokedex.Core.Domain.Entities;
+
 
 namespace Application.Services
 {
-    public class TypeService
+    public class TypeService : ITypeService
     {
-        private readonly TypeRepository _typeRepository;
-        public TypeService(ApplicationContext dbContext)
+        private readonly ITypeRepository _typeRepository;
+        public TypeService(ITypeRepository typeRepository)
         {
-            _typeRepository = new(dbContext);
+            _typeRepository = typeRepository;
         }
         public async Task Add(SaveTypeViewModel vm)
         {
